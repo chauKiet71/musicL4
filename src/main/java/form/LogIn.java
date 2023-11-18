@@ -14,6 +14,7 @@ import dao.TaiKhoanDAO;
 import entity.AccountData;
 import entity.NguoiDung;
 import java.io.File;
+import org.mindrot.jbcrypt.BCrypt;
 //import org.mindrot.jbcrypt.BCrypt;
 
 public class LogIn extends javax.swing.JFrame {
@@ -43,15 +44,15 @@ public class LogIn extends javax.swing.JFrame {
     void dangNhap() {
         String tenTK = txtName.getText();
         AccountData.setTenTK(tenTK);
-        String matKhau = new String(txtPass.getPassword());
-//        boolean mahoa = bcryrt(matKhau, nv.getMatKhau());
         TaiKhoan tk = dao.selectById(tenTK);
+        String matKhau = new String(txtPass.getPassword());
+        boolean mahoa = bcryrt(matKhau, tk.getMatKhau());
         String linkPath = tk.getAvatar();
         File file = new File(linkPath);
         String ii = file.toString();
         AccountData.setLink(ii);
         if (tk != null) {
-            if (!matKhau.equals(tk.getMatKhau())) {
+            if (!mahoa) {
                 msgBox.alertError(this, "Tên tài khoản hoặc mật khẩu không đúng");
             } else {
                 // Tạo một Timer để chuyển đến form chính sau 3 giây
@@ -82,9 +83,10 @@ public class LogIn extends javax.swing.JFrame {
         formTimer.start();
     }
 
-//    boolean bcryrt(String pass, String hash) {
-//        return BCrypt.checkpw(pass, hash);
-//    }
+    boolean bcryrt(String pass, String hash) {
+        return BCrypt.checkpw(pass, hash);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -11,7 +11,7 @@ import main.Main;
 import dao.NguoiDungDangKyDAO;
 import dao.TaiKhoanDangKyDAO;
 import utils.msgBox;
-//import org.mindrot.jbcrypt.BCrypt;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class Signup extends javax.swing.JFrame {
 
@@ -85,18 +85,23 @@ public class Signup extends javax.swing.JFrame {
     void insert() {
         TaiKhoan tk = getFormTK();
         NguoiDung ng = getForm();
-//        String password = new String(txtPass.getPassword());
-//        String hashedPassword = bcryrt(password);
-//        tk.setMatKhau(hashedPassword);
-        try {
-            tkdao.insert(tk);
-            ngdao.insert(ng);
-            msgBox.alert(this, "Đăng ký thành công");
-            updateAnh upAnh = new updateAnh();
-            upAnh.setVisible(true);
-            this.dispose();
-        } catch (Exception e) {
-            e.printStackTrace();
+        String password = new String(txtPass.getPassword());
+        String hashedPassword = bcryrt(password);
+        tk.setMatKhau(hashedPassword);
+        String mk2 = new String(hashedPassword);
+        if (!mk2.equals(hashedPassword)) {
+            msgBox.alertError(this, "Xác nhận mật khẩu không đúng");
+        } else {
+            try {
+                tkdao.insert(tk);
+                ngdao.insert(ng);
+                msgBox.alert(this, "Đăng ký thành công");
+                updateAnh upAnh = new updateAnh();
+                upAnh.setVisible(true);
+                this.dispose();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -215,21 +220,22 @@ public class Signup extends javax.swing.JFrame {
         } else {
             txtPass.setBorder(null);
         }
-        if (!pass.equals(confirmPass)) {
-            txtPassAgaint.setBorder(BorderFactory.createCompoundBorder(new LineBorder(color.red), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-            msgBox.alertError(this, "Xác nhận mật khẩu không đúng");
-            txtPassAgaint.requestFocus();
-            return false;
-        } else {
-            txtPassAgaint.setBorder(null);
-        }
+//        if (!pass.equals(confirmPass)) {
+//            txtPassAgaint.setBorder(BorderFactory.createCompoundBorder(new LineBorder(color.red), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+//            msgBox.alertError(this, "Xác nhận mật khẩu không đúng");
+//            txtPassAgaint.requestFocus();
+//            return false;
+//        } else {
+//            txtPassAgaint.setBorder(null);
+//        }
         return true;
     }
 
-//    String bcryrt(String pass) {
-//        String maHoa = BCrypt.hashpw(pass, BCrypt.gensalt());
-//        return maHoa;
-//    }
+    String bcryrt(String pass) {
+        String maHoa = BCrypt.hashpw(pass, BCrypt.gensalt());
+        return maHoa;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
