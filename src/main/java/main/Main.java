@@ -271,7 +271,6 @@ public class Main extends javax.swing.JFrame {
         account1 = new component.Account();
         jSeparator1 = new javax.swing.JSeparator();
         body = new javax.swing.JPanel();
-        infoCaNhan = new form.InfoCaNhan();
         menu1 = new Menu.Menu();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
@@ -391,7 +390,6 @@ public class Main extends javax.swing.JFrame {
 
         body.setOpaque(false);
         body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        body.add(infoCaNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, -1));
 
         menu1.setBackground(new java.awt.Color(255, 153, 153));
         body.add(menu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 171, 598));
@@ -704,7 +702,6 @@ public class Main extends javax.swing.JFrame {
     private swing.Button button1;
     private javax.swing.JScrollPane content;
     private form.FormTrangChu formTrangChu1;
-    private form.InfoCaNhan infoCaNhan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
